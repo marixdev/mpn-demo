@@ -1,0 +1,25 @@
+[Unit]
+Description=Mini Panel demo (pretend server, no root)
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/mpn-demo -listen 127.0.0.1:8790 -host demo.mpanel.biz
+DynamicUser=yes
+Restart=always
+RestartSec=3
+# The demo touches nothing of the machine: it keeps everything in memory and a private /tmp.
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+CapabilityBoundingSet=
+MemoryMax=256M
+TasksMax=64
+
+[Install]
+WantedBy=multi-user.target
