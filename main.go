@@ -426,7 +426,7 @@ func main() {
 		}
 	}()
 
-	web.Version = "1.2.1"
+	web.Version = "1.2.4"
 	srv := &web.Server{
 		HostOS:  "Ubuntu 24.04.3 LTS",
 		Mon:     mon,
