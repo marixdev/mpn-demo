@@ -253,6 +253,8 @@ func call(r ctl.Request) (ctl.Response, error) {
 			rows = append(rows, m{"site": r.Site, "backup": stamp(i), "state": "ok", "files": true, "databases": []string{strings.ReplaceAll(r.Site, "-", "_")}, "size_mb": 180.5 - float64(i)})
 		}
 		return answer(rows)
+	case "backup.keepinfo":
+		return answer(m{"keep": 7})
 	case "site.sslinfo":
 		s := find(r.Site)
 		if s == nil || s["tls"] != true {
