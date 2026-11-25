@@ -2,7 +2,8 @@
 # Builds mpn-demo for Linux (amd64 by default; GOARCH=arm64 ./build.sh for ARM).
 #
 # The demo imports mini-panel's internal packages, which Go allows only from inside that module. So the demo's files
-# are laid into mini-panel/cmd/mpn-demo with a build overlay, without copying anything into the submodule.
+# are laid into mini-panel/cmd/mpn-demo with a build overlay, without copying anything into the submodule. The same
+# overlay swaps internal/web/serverip.go for one that never reveals the demo host's real address.
 set -eu
 cd "$(dirname "$0")"
 here=$(pwd -W 2>/dev/null || pwd) # Git Bash on Windows needs the Windows form of the path
@@ -11,7 +12,8 @@ cat > overlay.json <<EOF
 {"Replace": {
   "$here/mini-panel/cmd/mpn-demo/main.go": "$here/main.go",
   "$here/mini-panel/cmd/mpn-demo/sshfake.go": "$here/sshfake.go",
-  "$here/mini-panel/cmd/mpn-demo/sshfake_test.go": "$here/sshfake_test.go"
+  "$here/mini-panel/cmd/mpn-demo/sshfake_test.go": "$here/sshfake_test.go",
+  "$here/mini-panel/internal/web/serverip.go": "$here/serverip.go"
 }}
 EOF
 cd mini-panel
